@@ -101,17 +101,19 @@ class DashboardFragment : Fragment() {
         return myView
     }
 
+    //Floating Button Animation
+
     private fun addData() {
         fIncomeBtn.setOnClickListener { view ->
             incomeDataInsert()
         }
 
         fExpenseBtn.setOnClickListener { view ->
-            // Adicionar a lógica de manipulação de cliques aqui
+            expenseDataInsert()
         }
     }
 
-    fun incomeDataInsert() {
+    private fun incomeDataInsert() {
         val myDialog = AlertDialog.Builder(activity)
         val inflater = LayoutInflater.from(activity)
         val myView = inflater.inflate(R.layout.custom_layout, null)
@@ -159,7 +161,7 @@ class DashboardFragment : Fragment() {
             }.addOnFailureListener { exception ->
                 Toast.makeText(activity, "Failed to add data: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
-            
+
 
             dialog.dismiss()
         }
@@ -172,6 +174,52 @@ class DashboardFragment : Fragment() {
 
 
     }
+
+    fun expenseDataInsert() {
+        val myDialog = AlertDialog.Builder(requireActivity()) // Use `requireActivity()` for fragments, `this` for activities
+        val inflater = LayoutInflater.from(activity)
+        val myView = inflater.inflate(R.layout.custom_layout, null)
+        myDialog.setView(myView) // Correct method name is setView
+
+        val dialog = myDialog.create()
+
+        val amount: EditText = myView.findViewById(R.id.amount_edit)
+        val type: EditText = myView.findViewById(R.id.type_edit)
+        val note: EditText = myView.findViewById(R.id.note_edit)
+
+        val btnSave: Button = myView.findViewById(R.id.save_btn)
+        val btnCancel: Button = myView.findViewById(R.id.cancel_btn)
+
+        btnSave.setOnClickListener { view ->
+            val emAmount = amount.text.toString().trim()
+            val emType = type.text.toString().trim()
+            val emNote = note.text.toString().trim()
+
+            if (emAmount.isEmpty()) {
+                amount.error = "Field Required"
+                return@setOnClickListener
+            }
+
+            if (emType.isEmpty()) {
+                type.error = "Field Required"
+                return@setOnClickListener
+            }
+
+            if (emNote.isEmpty()) {
+                note.error = "Field Required"
+                return@setOnClickListener
+            }
+
+            // Add your code here to handle the input (e.g., save to database)
+        }
+
+        btnCancel.setOnClickListener { view ->
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
 }
 
 
