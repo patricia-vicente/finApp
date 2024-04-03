@@ -9,6 +9,8 @@
 
     <color name="date_color">#FF270648</color>
 
+    <color name="expense_amount">#6B4493</color>
+
 </resources>
 
 
