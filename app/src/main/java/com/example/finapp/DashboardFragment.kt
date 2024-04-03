@@ -19,6 +19,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class DashboardFragment : Fragment() {
 
@@ -102,6 +105,35 @@ class DashboardFragment : Fragment() {
     }
 
     //Floating Button Animation
+    private fun ftAnimation() {
+        if (isOpen) {
+            fIncomeBtn.startAnimation(fadeClose)
+            fExpenseBtn.startAnimation(fadeClose)
+            fIncomeBtn.isClickable = false
+            fExpenseBtn.isClickable = false
+
+            fIncomeTxt.startAnimation(fadeClose)
+            fExpenseTxt.startAnimation(fadeClose)
+            fIncomeTxt.isClickable = false
+            fExpenseTxt.isClickable = false
+            isOpen = false
+        } else {
+            addData()
+
+            fIncomeBtn.startAnimation(fadeOpen)
+            fExpenseBtn.startAnimation(fadeOpen)
+            fIncomeBtn.isClickable = true
+            fExpenseBtn.isClickable = true
+
+            fIncomeTxt.startAnimation(fadeOpen)
+            fExpenseTxt.startAnimation(fadeOpen)
+            fIncomeTxt.isClickable = true
+            fExpenseTxt.isClickable = true
+            isOpen = true
+        }
+    }
+
+
 
     private fun addData() {
         fIncomeBtn.setOnClickListener { view ->
@@ -120,6 +152,8 @@ class DashboardFragment : Fragment() {
         myDialog.setView(myView)
         val dialog = myDialog.create()
 
+        dialog.setCancelable(false)
+
         val editAmount: EditText = myView.findViewById(R.id.amount_edit)
         val editType: EditText = myView.findViewById(R.id.type_edit)
         val editNote: EditText = myView.findViewById(R.id.note_edit)
@@ -137,6 +171,8 @@ class DashboardFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            val amountInt = amount.toIntOrNull() ?: 0
+
             if (amount.isEmpty()) {
                 editAmount.error = "Field Required"
                 return@setOnClickListener
@@ -147,12 +183,8 @@ class DashboardFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val amountInt = amount.toIntOrNull() ?: 0
-
-            val id = eIncomeDatabase.push().key ?: return@setOnClickListener
-
-            val formatter = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
-            val eDate = formatter.format(java.util.Date())
+            val id = eIncomeDatabase.push().key ?: ""
+            val eDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
 
             val data = Data(amountInt, type, note, id, eDate)
 
@@ -162,11 +194,12 @@ class DashboardFragment : Fragment() {
                 Toast.makeText(activity, "Failed to add data: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
 
-
+            ftAnimation()
             dialog.dismiss()
         }
 
         btnCancel.setOnClickListener {
+            ftAnimation()
             dialog.dismiss()
         }
 
@@ -175,13 +208,14 @@ class DashboardFragment : Fragment() {
 
     }
 
-    fun expenseDataInsert() {
-        val myDialog = AlertDialog.Builder(requireActivity()) // Use `requireActivity()` for fragments, `this` for activities
+    private fun expenseDataInsert() {
+        val myDialog = AlertDialog.Builder(requireActivity())
         val inflater = LayoutInflater.from(activity)
         val myView = inflater.inflate(R.layout.custom_layout, null)
-        myDialog.setView(myView) // Correct method name is setView
-
+        myDialog.setView(myView)
         val dialog = myDialog.create()
+
+        myDialog.setCancelable(false)
 
         val amount: EditText = myView.findViewById(R.id.amount_edit)
         val type: EditText = myView.findViewById(R.id.type_edit)
@@ -200,6 +234,8 @@ class DashboardFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            val inAmount = emAmount.toIntOrNull() ?: 0
+
             if (emType.isEmpty()) {
                 type.error = "Field Required"
                 return@setOnClickListener
@@ -210,10 +246,21 @@ class DashboardFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            // Add your code here to handle the input (e.g., save to database)
+            val id = eExpenseDatabase.push().key ?: ""
+            val eDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+
+            val data = Data(inAmount, emType, emNote, id, eDate)
+            eExpenseDatabase.child(id).setValue(data)
+
+            Toast.makeText(requireActivity(), "Data added", Toast.LENGTH_SHORT).show()
+
+            ftAnimation()
+            dialog.dismiss()
         }
 
+
         btnCancel.setOnClickListener { view ->
+            ftAnimation()
             dialog.dismiss()
         }
 
