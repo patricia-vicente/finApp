@@ -7,6 +7,10 @@ class Data(
     id: String,
     date: String
 ) {
+    fun getAmount() {
+
+    }
+
     var amount: Int = amount
         get() = field
         set(value) {
