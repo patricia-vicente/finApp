@@ -85,7 +85,8 @@ class IncomeFragment : Fragment() {
             }
 
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpensesFragment.MyViewHolder {
-                TODO("Not yet implemented")
+                val itemView = LayoutInflater.from(parent.context).inflate(R.layout.fragment_income, parent, false)
+                return ExpensesFragment.MyViewHolder(itemView)
             }
 
         }

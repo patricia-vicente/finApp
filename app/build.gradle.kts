@@ -54,9 +54,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-analytics-ktx:21.6.1")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
-    implementation("com.firebase:firebase-ui-database:8.0.2")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("com.firebaseui:firebase-ui-database:8.0.2")
-    implementation("androidx.card-view:card-view:1.0.0")
+    implementation("androidx.cardview:cardview:1.0.0")
 }
