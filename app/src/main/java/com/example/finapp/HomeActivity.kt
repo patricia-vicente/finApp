@@ -14,6 +14,7 @@ import com.google.android.material.navigation.NavigationView
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var buttonBar: ImageButton
     private lateinit var navigationView: NavigationView
@@ -47,14 +48,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
 
                 R.id.income -> {
-                    Toast.makeText(this@HomeActivity, "Dashboard Clicked", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@HomeActivity, "Income Clicked", Toast.LENGTH_SHORT)
                         .show()
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
 
                 R.id.expense -> {
-                    Toast.makeText(this@HomeActivity, "Dashboard Clicked", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@HomeActivity, "Expense Clicked", Toast.LENGTH_SHORT)
                         .show()
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true

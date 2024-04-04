@@ -32,11 +32,7 @@ class RegActivity : AppCompatActivity() {
             val email = binding.regEmail.text.toString()
             val password = binding.regPassword.text.toString()
             if (email.trim().isEmpty() || password.trim().isEmpty()) {
-                Toast.makeText(
-                    this@RegActivity,
-                    "Email and password cannot be empty.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this@RegActivity, "Email and password cannot be empty.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

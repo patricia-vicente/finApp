@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-   /* private lateinit var eEmail: EditText
+    /* private lateinit var eEmail: EditText
     private lateinit var ePass: EditText
     private lateinit var eLoginBtn: Button
     private lateinit var eForgetPass: TextView
@@ -27,12 +27,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        eAuth=FirebaseAuth.getInstance()
-        /*login()
-        initFirebase()*/
+        eAuth = FirebaseAuth.getInstance()
 
         binding.registerHere.setOnClickListener {
-            val intent = Intent (this@MainActivity, RegActivity::class.java)
+            val intent = Intent(this@MainActivity, RegActivity::class.java)
             try {
                 startActivity(intent)
             } catch (e: Exception) {
@@ -43,27 +41,36 @@ class MainActivity : AppCompatActivity() {
         binding.loginBtn.setOnClickListener {
             val email = binding.loginEmail.text.toString().trim()
             val password = binding.loginPassword.text.toString().trim()
-            // Correção na verificação de campos vazios
+
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this@MainActivity, "Email and password cannot be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@MainActivity,
+                    "Email and password cannot be empty",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
             eAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this@MainActivity) { task -> // Mudança para addOnCompleteListener
-                    if (task.isSuccessful) {
+                .addOnSuccessListener { authResult ->
+                    try {
+                        val intent = Intent(this@MainActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                    } catch (e: Exception) {
 
-                        Toast.makeText(this@MainActivity, "Login Successful!", Toast.LENGTH_SHORT).show()
-                    } else {
-
-                        val errorMessage = task.exception?.message ?: "Login failed"
-                        Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_SHORT).show()
                     }
                 }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this@MainActivity, exception.message, Toast.LENGTH_SHORT).show()
+                }
         }
-
     }
+
+
 }
+
+
+
 
 
 
@@ -71,6 +78,17 @@ class MainActivity : AppCompatActivity() {
     private fun initFirebase() {
         eAuth=FirebaseAuth.getInstance()
     }
+    /*login()
+        initFirebase()*/
+         /* private lateinit var eEmail: EditText
+    private lateinit var ePass: EditText
+    private lateinit var eLoginBtn: Button
+    private lateinit var eForgetPass: TextView
+    private lateinit var eSignUpNow: TextView
+    private lateinit var progressDialog: AlertDialog */
+
+
+     /*
 
     private fun login() {
         eEmail = findViewById(R.id.login_email)
