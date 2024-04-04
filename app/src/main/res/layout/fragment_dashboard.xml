@@ -22,19 +22,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                
+
                 <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="203dp"
+                    android:layout_height="59dp"
                     android:layout_weight="1"
                     android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Incomes"
                         android:textAppearance="?android:textAppearanceLarge"
-                        android:textColor="@android:color/black"
-                        android:text="Incomes">
+                        android:textColor="@android:color/black">
 
                     </TextView>
 
@@ -52,50 +52,6 @@
                         android:textAppearance="?android:textAppearanceLarge"
                         android:textColor="@android:color/black"
                         android:text="Expenses">
-
-                    </TextView>
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="7dp">
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/income_result"
-                        android:textAppearance="?android:textAppearanceLarge"
-                        android:textColor="@android:color/black"
-                        android:text="000.00">
-
-                    </TextView>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/expense_result"
-                        android:textAppearance="?android:textAppearanceLarge"
-                        android:textColor="@android:color/black"
-                        android:text="000.00">
 
                     </TextView>
 
@@ -199,7 +155,53 @@
             app:fabSize="normal"
             android:src="@drawable/income"/>
 
+        <TextView
+            android:id="@+id/income_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="000.00"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@android:color/black">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/expense_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="000.00"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:textColor="@android:color/black">
+
+                </TextView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </LinearLayout>
+
+

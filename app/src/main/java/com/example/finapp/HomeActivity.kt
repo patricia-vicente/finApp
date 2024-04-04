@@ -9,21 +9,37 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.example.finapp.databinding.ActivityHomeBinding
+import com.example.finapp.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private lateinit var binding:ActivityHomeBinding
 
-
+/*
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var buttonBar: ImageButton
     private lateinit var navigationView: NavigationView
     private lateinit var bottomNavBar: BottomNavigationView
     private lateinit var frameLayout: FrameLayout
+    */
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.main
+
+
+
+
+
+
+
+        /*
         drawerLayout = findViewById(R.id.drawer_layout)
 
         buttonBar = findViewById(R.id.buttonBar)
@@ -106,7 +122,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 }
 
-
+*/
 
 
 
