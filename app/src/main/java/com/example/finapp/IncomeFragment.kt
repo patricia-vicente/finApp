@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finapp.Model.Data
+import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,14 +27,12 @@ class IncomeFragment : Fragment() {
     //recycler view
     private lateinit var recyclerView: RecyclerView
 
-    //text view
     private lateinit var incomeTotal: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val myView = inflater.inflate(R.layout.fragment_income, container, false)
 
         eAuth = FirebaseAuth.getInstance()
-
         val eUser = eAuth.currentUser
         val uid = eUser?.uid ?: ""
 
@@ -41,7 +41,6 @@ class IncomeFragment : Fragment() {
 
         incomeTotal=myView.findViewById(R.id.incomeTxt)
 
-        //recycler view
         recyclerView = myView.findViewById(R.id.income_recyclerId)
 
         val layoutManager = LinearLayoutManager(activity)
@@ -53,88 +52,75 @@ class IncomeFragment : Fragment() {
 
         eIncomeDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var totalValue = 0
-                for (mysnapshot in dataSnapshot.children) {
-                    val data = mysnapshot.getValue(Data::class.java)
-                    if (data != null) {
-                        totalValue += data.getAmount()
-                    }
+                var incomeSum = 0
+
+                for (mySnapshot in dataSnapshot.children) {
+                    val data = mySnapshot.getValue(Data::class.java)
+                    incomeSum += data?.amount ?: 0
                 }
-                val stTotalValue = totalValue.toString()
-                // Assuming incomeTotal is a TextView or similar; must run on UI thread if this is UI code
-                incomeTotal.setText(stTotalValue)
+
+                val strIncomeSum = incomeSum.toString()
+                incomeTotal.text = strIncomeSum
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Handle possible errors.
-            }
+            override fun onCancelled(databaseError: DatabaseError) {}
         })
-
 
         return myView
     }
 
     override fun onStart() {
-
         super.onStart()
 
-        val adapter = object : FirebaseRecyclerAdapter<Data, MyViewHolder>(
-            Data::class.java,
-            R.layout.recycler_income_data,
-            MyViewHolder::class.java,
-            eIncomeDatabase
-        ) {
-            override fun populateViewHolder(viewHolder: MyViewHolder, model: Data, position: Int) {
-                viewHolder.setType(model.type)
-                viewHolder.setNote(model.note)
-                viewHolder.setDate(model.date)
-                viewHolder.setAmount(model.amount)
+        val adapter: FirebaseRecyclerAdapter<Data, ExpensesFragment.MyViewHolder> = object : FirebaseRecyclerAdapter<Data, ExpensesFragment.MyViewHolder>(
+            FirebaseRecyclerOptions.Builder<Data>()
+                .setQuery(eIncomeDatabase, Data::class.java)
+                .build()
+        )  {
+            override fun onBindViewHolder(holder: ExpensesFragment.MyViewHolder, position: Int, model: Data) {
+                holder.setDate(model.date)
+                holder.setType(model.type)
+                holder.setNote(model.note)
+                holder.setAmount(model.amount)
             }
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpensesFragment.MyViewHolder {
+                TODO("Not yet implemented")
+            }
+
         }
 
         recyclerView.adapter = adapter
     }
 
-}
-
-private operator fun Int.plusAssign(amount: Unit) {
-    TODO("Not yet implemented")
-}
-
-class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var eView: View = itemView
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun setDate(date: String) {
+            val eDate = itemView.findViewById<TextView>(R.id.date_text_income)
+            eDate.text = date
+        }
 
         fun setType(type: String) {
-            eView.findViewById<TextView>(R.id.type_text_income).text = type
+            val eType = itemView.findViewById<TextView>(R.id.type_text_income)
+            eType.text = type
         }
 
         fun setNote(note: String) {
-            eView.findViewById<TextView>(R.id.note_text_income).text = note
-        }
-
-        fun setDate(date: String) {
-            eView.findViewById<TextView>(R.id.date_text_income).text = date
+            val eNote = itemView.findViewById<TextView>(R.id.note_text_income)
+            eNote.text = note
         }
 
         fun setAmount(amount: Int) {
-            eView.findViewById<TextView>(R.id.amount_text_income).text = amount.toString()
+            val eAmount = itemView.findViewById<TextView>(R.id.amount_text_income)
+            val strAmount = amount.toString()
+            eAmount.text = strAmount
         }
     }
 
-
-
-private fun Unit.build() {
-
 }
-open class FirebaseRecyclerAdapter<T, U>(
-    java: Class<T>,
-    recyclerIncomeData: Int,
-    java1: Class<U>,
-    eIncomeDatabase: DatabaseReference
-) {
 
-    open fun populateViewHolder(viewHolder: MyViewHolder, model: Data, position: Int) {}
-}
+
+
+
 
 
 

@@ -37,6 +37,7 @@ android {
         var enabled = true
     }
 
+
 }
 
 dependencies {
@@ -56,6 +57,6 @@ dependencies {
     implementation("com.firebase:firebase-ui-database:8.0.2")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("com.firebase:firebase-ui:0.4.3")
+    implementation("com.firebaseui:firebase-ui-database:8.0.2")
     implementation("androidx.card-view:card-view:1.0.0")
 }
