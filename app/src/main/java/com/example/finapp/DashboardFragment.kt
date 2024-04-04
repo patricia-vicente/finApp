@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.finapp.Model.Data
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -24,6 +25,15 @@ import java.util.Date
 import java.util.Locale
 
 class DashboardFragment : Fragment() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Exemplo de uso de AppCompatActivity
+        if (activity is AppCompatActivity) {
+            val actionBar = (activity as AppCompatActivity).supportActionBar
+            actionBar?.setTitle("New")
+        }
+    }
+
 
     // Floating Action Buttons
     private lateinit var fMainBtn: FloatingActionButton
@@ -187,18 +197,15 @@ class DashboardFragment : Fragment() {
             val eDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
 
             val data = Data(amountInt, type, note, id, eDate)
+            eIncomeDatabase.child(id).setValue(data)
 
-            eIncomeDatabase.child(id).setValue(data).addOnSuccessListener {
-                Toast.makeText(activity, "Data Added", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener { exception ->
-                Toast.makeText(activity, "Failed to add data: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
+            Toast.makeText(requireActivity(), "Data Added", Toast.LENGTH_SHORT).show()
 
             ftAnimation()
             dialog.dismiss()
         }
 
-        btnCancel.setOnClickListener {
+        btnCancel.setOnClickListener { view->
             ftAnimation()
             dialog.dismiss()
         }
@@ -258,7 +265,6 @@ class DashboardFragment : Fragment() {
             dialog.dismiss()
         }
 
-
         btnCancel.setOnClickListener { view ->
             ftAnimation()
             dialog.dismiss()
@@ -268,5 +274,6 @@ class DashboardFragment : Fragment() {
     }
 
 }
+
 
 

@@ -1,37 +1,73 @@
 package com.example.finapp
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.finapp.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var eEmail: EditText
+    private lateinit var binding: ActivityMainBinding
+
+   /* private lateinit var eEmail: EditText
     private lateinit var ePass: EditText
     private lateinit var eLoginBtn: Button
     private lateinit var eForgetPass: TextView
     private lateinit var eSignUpNow: TextView
-    private lateinit var progressDialog: AlertDialog
+    private lateinit var progressDialog: AlertDialog */
 
     private lateinit var eAuth: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        login()
-        initFirebase()
-    }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        eAuth=FirebaseAuth.getInstance()
+        /*login()
+        initFirebase()*/
+
+        binding.registerHere.setOnClickListener {
+            val intent = Intent (this@MainActivity, RegActivity::class.java)
+            try {
+                startActivity(intent)
+            } catch (e: Exception) {
+                // Handle exception
+            }
+        }
+
+        binding.loginBtn.setOnClickListener {
+            val email = binding.loginEmail.text.toString().trim()
+            val password = binding.loginPassword.text.toString().trim()
+            // Correção na verificação de campos vazios
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this@MainActivity, "Email and password cannot be empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            eAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this@MainActivity) { task -> // Mudança para addOnCompleteListener
+                    if (task.isSuccessful) {
+
+                        Toast.makeText(this@MainActivity, "Login Successful!", Toast.LENGTH_SHORT).show()
+                    } else {
+
+                        val errorMessage = task.exception?.message ?: "Login failed"
+                        Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
+
+    }
+}
+
+
+
+    /*
     private fun initFirebase() {
         eAuth=FirebaseAuth.getInstance()
     }
@@ -94,4 +130,4 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-}
+}*/

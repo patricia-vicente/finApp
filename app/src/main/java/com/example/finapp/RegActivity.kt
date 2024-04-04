@@ -1,42 +1,74 @@
 package com.example.finapp
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.finapp.databinding.ActivityRegBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class RegActivity : AppCompatActivity() {
 
-    private lateinit var eEmail: EditText
+    private lateinit var binding: ActivityRegBinding
+    private lateinit var eAuth: FirebaseAuth
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityRegBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        eAuth = FirebaseAuth.getInstance()
+
+        binding.signIn.setOnClickListener {
+            val intent= Intent(this@RegActivity,MainActivity::class.java)
+            try{
+                startActivity(intent);
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.regBtn.setOnClickListener {
+            val email = binding.regEmail.text.toString()
+            val password = binding.regPassword.text.toString()
+            if (email.trim().isEmpty() || password.trim().isEmpty()) {
+                Toast.makeText(
+                    this@RegActivity,
+                    "Email and password cannot be empty.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            eAuth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+
+                    Toast.makeText(this@RegActivity, "User Registered", Toast.LENGTH_SHORT).show()
+                }
+
+                .addOnFailureListener { e ->
+                    Toast.makeText(this@RegActivity, e.message, Toast.LENGTH_SHORT).show()
+                }
+
+
+        }
+    }
+}
+
+
+
+/*
+
+private lateinit var eEmail: EditText
     private lateinit var ePass: EditText
     private lateinit var eRegBtn: Button
     private lateinit var eSignIn: TextView
     private lateinit var progressDialog: AlertDialog
-
-    private lateinit var eAuth: FirebaseAuth
-
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reg)
-        reg()
-        initFirebase()
-
-    }
-
     private fun initFirebase() {
         eAuth=FirebaseAuth.getInstance()
     }
-
+  /*reg()
+        initFirebase()*/
     private fun reg() {
 
         eEmail=findViewById(R.id.reg_email)
@@ -84,4 +116,4 @@ class RegActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-}
+}*/
