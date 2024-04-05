@@ -1,30 +1,8 @@
 package com.example.finapp
 
-import android.app.AlertDialog
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.finapp.Model.Data
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
-class DashboardFragment : Fragment() {
+class DashboardFragment : Fragment() /*
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Exemplo de uso de AppCompatActivity
@@ -158,7 +136,7 @@ class DashboardFragment : Fragment() {
     private fun incomeDataInsert() {
         val myDialog = AlertDialog.Builder(activity)
         val inflater = LayoutInflater.from(activity)
-        val myView = inflater.inflate(R.layout.custom_layout, null)
+        val myView = inflater.inflate(R.layout.transaction_layout, null)
         myDialog.setView(myView)
         val dialog = myDialog.create()
 
@@ -218,7 +196,7 @@ class DashboardFragment : Fragment() {
     private fun expenseDataInsert() {
         val myDialog = AlertDialog.Builder(requireActivity())
         val inflater = LayoutInflater.from(activity)
-        val myView = inflater.inflate(R.layout.custom_layout, null)
+        val myView = inflater.inflate(R.layout.transaction_layout, null)
         myDialog.setView(myView)
         val dialog = myDialog.create()
 
@@ -273,7 +251,7 @@ class DashboardFragment : Fragment() {
         dialog.show()
     }
 
-}
+}*/
 
 
 

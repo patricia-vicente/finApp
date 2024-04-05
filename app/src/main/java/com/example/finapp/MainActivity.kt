@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             eAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener { authResult ->
                     try {
-                        val intent = Intent(this@MainActivity, HomeActivity::class.java)
+                        val intent = Intent(this@MainActivity, DashboardActivity::class.java)
                         startActivity(intent)
                     } catch (e: Exception) {
 
