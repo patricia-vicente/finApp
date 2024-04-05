@@ -24,8 +24,7 @@ class DashboardActivity : AppCompatActivity() {
                     true
                 }
                 R.id.income -> {
-                    // Inicie a Activity correspondente ao item "Dashboard"
-                    val intent = Intent(this, DashboardActivity::class.java)
+                    val intent = Intent(this, ::class.java)
                     startActivity(intent)
                     true
                 }
