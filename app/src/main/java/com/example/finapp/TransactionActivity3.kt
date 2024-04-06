@@ -1,6 +1,7 @@
 package com.example.finapp
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +19,12 @@ class TransactionActivity3(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.note.text = transaction2ArrayList[position].note
-        holder.amount.text = transaction2ArrayList[position].amount
-        holder.date.text = transaction2ArrayList[position].date
+        val transaction = transaction2ArrayList[position]
+        holder.note.text = transaction.note
+        holder.amount.text = transaction.amount
+        holder.date.text = transaction.date
 
+        Log.d("TransactionAdapter", "Binding position $position: $transaction")
     }
 
     override fun getItemCount(): Int {
