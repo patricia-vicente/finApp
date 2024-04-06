@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp">
+    <View
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape"
+        android:layout_gravity="end"
+        android:id="@+id/type_recycler"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="note"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:maxLength="30"
+            android:id="@+id/note_recycler"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:textSize="20sp"
+            android:id="@+id/amount_recycler"
+            android:layout_below="@+id/note_recycler"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01 April 2024 15:30"
+            android:id="@+id/date_recycler"
+            android:layout_below="@id/amount_recycler"/>
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
