@@ -46,39 +46,43 @@ class DashboardActivity : AppCompatActivity() {
 
         loadData()
     }
-
     private fun loadData() {
-        firebaseStore.collection("Expenses").document(firebaseAuth.uid ?: "").collection("Notes")
+        val userId = firebaseAuth.uid ?: return
+
+        sumExpense = 0
+        sumIncome = 0
+
+        firebaseStore.collection("Expenses").document(userId).collection("Notes")
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val documents = task.result?.documents ?: listOf()
-                    documents.forEach { document ->
+                    task.result?.documents?.forEach { document ->
                         val amount = document.getString("amount")?.toIntOrNull() ?: 0
-                        if (document.getString("type") == "Expense") {
-                            sumExpense += amount
-                        } else {
-                            sumIncome += amount
-                        }
-
-                        val transaction = TransactionActivity2(
-                            document.getString("id") ?: "",
-                            document.getString("note") ?: "",
-                            document.getString("amount") ?: "",
-                            document.getString("type") ?: "",
-                            document.getString("date") ?: ""
-                        )
-
-                        transactionActivity2ArrayList.add(transaction)
+                        sumExpense += amount
                     }
 
                     binding.sumExpense.text = sumExpense.toString()
+                    binding.balance.text = (sumIncome - sumExpense).toString()
+                }
+
+                transactionActivity3.notifyDataSetChanged()
+            }
+
+        firebaseStore.collection("Incomes").document(userId).collection("Notes")
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    task.result?.documents?.forEach { document ->
+                        val amount = document.getString("amount")?.toIntOrNull() ?: 0
+                        sumIncome += amount
+                    }
+
                     binding.sumIncome.text = sumIncome.toString()
                     binding.balance.text = (sumIncome - sumExpense).toString()
-
-                    transactionActivity3.notifyDataSetChanged()
-                } else {
-
                 }
+
+                transactionActivity3.notifyDataSetChanged()
             }
     }
+
+
+
 }
