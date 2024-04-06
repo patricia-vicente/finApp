@@ -7,6 +7,8 @@ import com.example.finapp.databinding.ActivityTransactionBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Locale
 import java.util.UUID
 
 class TransactionActivity : AppCompatActivity() {
@@ -15,6 +17,7 @@ class TransactionActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private var firebaseUser: FirebaseUser? = null
     private lateinit var transactionOp: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTransactionBinding.inflate(layoutInflater)
@@ -33,12 +36,16 @@ class TransactionActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            val sdf = SimpleDateFormat("dd MM yyyy_HH:mm", Locale.getDefault())
+            val currentDateAndTime = sdf.format(java.util.Date())
+
             val id = UUID.randomUUID().toString()
             val transaction = hashMapOf<String, Any>(
                 "id" to id,
                 "amount" to amount,
                 "note" to note,
-                "type" to type
+                "type" to type,
+                "date" to currentDateAndTime
             )
 
             firebaseStore.collection("Incomes").document(firebaseAuth.uid.toString()).collection("Notes").document(id)
@@ -48,6 +55,8 @@ class TransactionActivity : AppCompatActivity() {
                     binding.amountEdit.text.clear()
                     binding.noteEdit.text.clear()
                     binding.typeEdit.text.clear()
+
+                    finish()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, e.message ?: "Error", Toast.LENGTH_SHORT).show()
@@ -65,12 +74,16 @@ class TransactionActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            val sdf = SimpleDateFormat("dd MM yyyy_HH:mm", Locale.getDefault())
+            val currentDateAndTime = sdf.format(java.util.Date())
+
             val id = UUID.randomUUID().toString()
             val transaction = hashMapOf<String, Any>(
                 "id" to id,
                 "amount" to amount,
                 "note" to note,
-                "type" to type
+                "type" to type,
+                "date" to currentDateAndTime
             )
 
             firebaseStore.collection("Expenses").document(firebaseAuth.uid.toString()).collection("Notes").document(id)
@@ -80,6 +93,8 @@ class TransactionActivity : AppCompatActivity() {
                     binding.amountEdit.text.clear()
                     binding.noteEdit.text.clear()
                     binding.typeEdit.text.clear()
+
+                    finish()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, e.message ?: "Error", Toast.LENGTH_SHORT).show()

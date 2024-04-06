@@ -29,9 +29,8 @@ class TransactionActivity3(
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var note: TextView = itemView.findViewById(R.id.note_recycler) // Ajuste o R.id.note para seu ID real
-        var amount: TextView = itemView.findViewById(R.id.amount_recycler) // Ajuste o R.id.amount para seu ID real
-        var date: TextView = itemView.findViewById(R.id.date_recycler) // Ajuste o R.id.date para seu ID real
-        var type: View = itemView.findViewById(R.id.type_recycler) // Ajuste o R.id.type para seu ID real
+        var note: TextView = itemView.findViewById(R.id.note_recycler)
+        var amount: TextView = itemView.findViewById(R.id.amount_recycler)
+        var date: TextView = itemView.findViewById(R.id.date_recycler)
     }
 }

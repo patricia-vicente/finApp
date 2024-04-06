@@ -53,12 +53,9 @@ class MainActivity : AppCompatActivity() {
 
             eAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener { authResult ->
-                    try {
-                        val intent = Intent(this@MainActivity, DashboardActivity::class.java)
-                        startActivity(intent)
-                    } catch (e: Exception) {
-
-                    }
+                    val intent = Intent(this@MainActivity, DashboardActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
                 .addOnFailureListener { exception ->
                     Toast.makeText(this@MainActivity, exception.message, Toast.LENGTH_SHORT).show()

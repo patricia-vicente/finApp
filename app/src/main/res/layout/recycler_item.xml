@@ -3,26 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="20dp">
-    <View
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/shape"
-        android:layout_gravity="end"
-        android:id="@+id/type_recycler"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp">
+
         <TextView
+            android:id="@+id/note_recycler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="note"
             android:ellipsize="end"
-            android:maxLines="1"
             android:maxLength="30"
-            android:id="@+id/note_recycler"/>
+            android:maxLines="1"
+            android:text="note"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
