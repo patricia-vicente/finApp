@@ -11,14 +11,6 @@ import com.google.firebase.auth.FirebaseAuth
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-    /* private lateinit var eEmail: EditText
-    private lateinit var ePass: EditText
-    private lateinit var eLoginBtn: Button
-    private lateinit var eForgetPass: TextView
-    private lateinit var eSignUpNow: TextView
-    private lateinit var progressDialog: AlertDialog */
-
     private lateinit var eAuth: FirebaseAuth
 
 
@@ -28,6 +20,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         eAuth = FirebaseAuth.getInstance()
+
+        eAuth.addAuthStateListener(FirebaseAuth.AuthStateListener { eAuth ->
+            val user = eAuth.currentUser
+            if (user != null) {
+                try {
+                    val intent = Intent(this@MainActivity, DashboardActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } catch (e: Exception) {
+
+                }
+            }
+        })
+
 
         binding.registerHere.setOnClickListener {
             val intent = Intent(this@MainActivity, RegActivity::class.java)
@@ -75,6 +81,9 @@ class MainActivity : AppCompatActivity() {
     private fun initFirebase() {
         eAuth=FirebaseAuth.getInstance()
     }
+
+
+     */
     /*login()
         initFirebase()*/
          /* private lateinit var eEmail: EditText

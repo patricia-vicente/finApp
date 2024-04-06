@@ -43,6 +43,16 @@ class DashboardActivity : AppCompatActivity() {
                 true
             } ?: false
         }
+        binding.btnRefresh.setOnClickListener {
+            try {
+                val intent = Intent(this@DashboardActivity, DashboardActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
 
         loadData()
     }

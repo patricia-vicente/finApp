@@ -131,7 +131,7 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Income"
+                        android:text="Delete"
                         android:id="@+id/income_btn"
                         android:background="@color/nav_header"
                         android:textAppearance="?android:textAppearanceMedium"/>
@@ -148,7 +148,7 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Expense"
+                        android:text="Update"
                         android:id="@+id/expense_btn"
                         android:background="@color/nav_header"
                         android:textAppearance="?android:textAppearanceMedium"/>
