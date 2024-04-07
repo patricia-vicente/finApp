@@ -10,7 +10,7 @@
         android:id="@+id/tool_bar_transactions"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/bg_toolbar">
+        android:background="@drawable/background_color">
 
         <TextView
             android:layout_width="match_parent"
@@ -193,6 +193,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/menu_bottom"
-        android:background="@drawable/bg_fundo"/>
+        android:background="@drawable/background_color"/>
 
 </RelativeLayout>

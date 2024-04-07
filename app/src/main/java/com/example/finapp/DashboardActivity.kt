@@ -2,9 +2,14 @@ package com.example.finapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finapp.databinding.ActivityDashboardBinding
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -14,6 +19,8 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private var modelsActivityArrayList = ArrayList<ModelsActivity>()
     private lateinit var adapterActivity: AdapterActivity
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
     private var sumExpense: Int = 0
     private var sumIncome: Int = 0
 
@@ -22,6 +29,10 @@ class DashboardActivity : AppCompatActivity() {
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navigationView = findViewById(R.id.naView)
+        drawerLayout = findViewById(R.id.drawer_layout)
+
         firebaseStore = FirebaseFirestore.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()//
         adapterActivity = AdapterActivity(this, modelsActivityArrayList)
@@ -29,6 +40,33 @@ class DashboardActivity : AppCompatActivity() {
         binding.recyclerDash.layoutManager = LinearLayoutManager(this)
         binding.recyclerDash.adapter = AdapterActivity(this, modelsActivityArrayList)
         binding.recyclerDash.setHasFixedSize(true)
+
+        binding.btnDash.setOnClickListener {
+            binding.drwer.openDrawer(GravityCompat.START)
+        }
+
+        binding.naView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                // IDs dos itens do menu
+                R.id.dashboard -> {
+                    Toast.makeText(this, "Dashboard Clicked", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.income -> {
+                    Toast.makeText(this, "Income Clicked", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.expense -> {
+                    Toast.makeText(this, "Expense Clicked", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }.also {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+            }
+        }
+
+
 
         binding.bottomNavBar.setOnNavigationItemSelectedListener { item ->
             val intent = when (item.itemId) {

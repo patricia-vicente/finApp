@@ -11,7 +11,17 @@
         android:id="@+id/tool_bar_dashboard"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/bg_fundo">
+        android:background="@drawable/background_color">
+        <ImageView
+            android:id="@+id/btn_dash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dash"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentLeft="true"/>
+
+
         <ImageView
             android:id="@+id/btn_refresh"
             android:layout_width="wrap_content"
@@ -135,6 +145,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/menu_bottom"
-        android:background="@drawable/bg_fundo"/>
+        android:background="@drawable/background_color"/>
 
 </RelativeLayout>
