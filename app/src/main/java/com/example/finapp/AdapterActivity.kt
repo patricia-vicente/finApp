@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class TransactionActivity3(
+class AdapterActivity(
     private val context: Context,
-    private val transaction2ArrayList: ArrayList<TransactionActivity2>
-) : RecyclerView.Adapter<TransactionActivity3.MyViewHolder>() {
+    private val modelsActivityArrayList: ArrayList<ModelsActivity>
+) : RecyclerView.Adapter<AdapterActivity.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false)
@@ -19,7 +19,7 @@ class TransactionActivity3(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val transaction = transaction2ArrayList[position]
+        val transaction = modelsActivityArrayList[position]
         holder.note.text = transaction.note
         holder.amount.text = transaction.amount
         holder.date.text = transaction.date
@@ -28,7 +28,7 @@ class TransactionActivity3(
     }
 
     override fun getItemCount(): Int {
-        return transaction2ArrayList.size
+        return modelsActivityArrayList.size
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

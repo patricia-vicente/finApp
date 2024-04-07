@@ -12,8 +12,8 @@ class IncomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIncomeBinding
     private lateinit var firebaseStore: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
-    private var transactionActivity2ArrayList = ArrayList<TransactionActivity2>()
-    private lateinit var transactionActivity3: TransactionActivity3
+    private var modelsActivityArrayList = ArrayList<ModelsActivity>()
+    private lateinit var adapterActivity: AdapterActivity
     private var sumExpense: Int = 0
     private var sumIncome: Int = 0
 
@@ -24,11 +24,11 @@ class IncomeActivity : AppCompatActivity() {
 
         firebaseStore = FirebaseFirestore.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()
-        transactionActivity3 = TransactionActivity3(this, transactionActivity2ArrayList)
+        adapterActivity = AdapterActivity(this, modelsActivityArrayList)
 
         binding.recyclerDashIncome.layoutManager = LinearLayoutManager(this)
         binding.recyclerDashIncome.adapter =
-            TransactionActivity3(this, transactionActivity2ArrayList)
+            AdapterActivity(this, modelsActivityArrayList)
         binding.recyclerDashIncome.setHasFixedSize(true)
 
         binding.bottomNavBar.setOnNavigationItemSelectedListener { item ->
@@ -61,7 +61,7 @@ class IncomeActivity : AppCompatActivity() {
     private fun loadData() {
         val userId = firebaseAuth.uid ?: return
 
-        transactionActivity2ArrayList.clear() // Limpa a lista para garantir que está vazia antes de carregar novos dados.
+        modelsActivityArrayList.clear() // Limpa a lista para garantir que está vazia antes de carregar novos dados.
 
         firebaseStore.collection("Incomes").document(userId).collection("Notes")
             .get().addOnCompleteListener { task ->
@@ -69,16 +69,16 @@ class IncomeActivity : AppCompatActivity() {
                     task.result?.documents?.forEach { document ->
                         val amount = document.getString("amount")?.toIntOrNull() ?: 0
 
-                        val transaction = TransactionActivity2(
+                        val transaction = ModelsActivity(
                             document.id,
                             document.getString("note") ?: "",
                             amount.toString(),
                             "Income",
                             document.getString("date") ?: ""
                         )
-                        transactionActivity2ArrayList.add(transaction)
+                        modelsActivityArrayList.add(transaction)
                     }
-                    transactionActivity3.notifyDataSetChanged() // Notifica o adapter de que os dados foram atualizados.
+                    adapterActivity.notifyDataSetChanged() // Notifica o adapter de que os dados foram atualizados.
                 }
             }
     }

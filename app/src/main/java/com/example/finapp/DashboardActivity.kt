@@ -12,8 +12,8 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardBinding
     private lateinit var firebaseStore: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
-    private var transactionActivity2ArrayList = ArrayList<TransactionActivity2>()
-    private lateinit var transactionActivity3: TransactionActivity3
+    private var modelsActivityArrayList = ArrayList<ModelsActivity>()
+    private lateinit var adapterActivity: AdapterActivity
     private var sumExpense: Int = 0
     private var sumIncome: Int = 0
 
@@ -24,10 +24,10 @@ class DashboardActivity : AppCompatActivity() {
 
         firebaseStore = FirebaseFirestore.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()
-        transactionActivity3 = TransactionActivity3(this, transactionActivity2ArrayList)
+        adapterActivity = AdapterActivity(this, modelsActivityArrayList)
 
         binding.recyclerDash.layoutManager = LinearLayoutManager(this)
-        binding.recyclerDash.adapter = TransactionActivity3(this, transactionActivity2ArrayList)
+        binding.recyclerDash.adapter = AdapterActivity(this, modelsActivityArrayList)
         binding.recyclerDash.setHasFixedSize(true)
 
         binding.bottomNavBar.setOnNavigationItemSelectedListener { item ->
@@ -60,7 +60,7 @@ class DashboardActivity : AppCompatActivity() {
     private fun loadData() {
         val userId = firebaseAuth.uid ?: return
 
-        transactionActivity2ArrayList.clear()
+        modelsActivityArrayList.clear()
 
         sumExpense = 0
         sumIncome = 0
@@ -72,19 +72,19 @@ class DashboardActivity : AppCompatActivity() {
                         val amount = document.getString("amount")?.toIntOrNull() ?: 0
                         sumExpense += amount
 
-                        val transaction = TransactionActivity2(
+                        val transaction = ModelsActivity(
                             document.id,
                             document.getString("note") ?: "",
                             amount.toString(),
                             "Expense",
                             document.getString("date") ?: ""
                         )
-                        transactionActivity2ArrayList.add(transaction)
+                        modelsActivityArrayList.add(transaction)
                     }
 
                     binding.sumExpense.text = sumExpense.toString()
                     binding.balance.text = (sumIncome - sumExpense).toString()
-                    transactionActivity3.notifyDataSetChanged()
+                    adapterActivity.notifyDataSetChanged()
                 }
 
 
@@ -95,19 +95,19 @@ class DashboardActivity : AppCompatActivity() {
                                 val amount = document.getString("amount")?.toIntOrNull() ?: 0
                                 sumIncome += amount
 
-                                val transaction = TransactionActivity2(
+                                val transaction = ModelsActivity(
                                     document.id,
                                     document.getString("note") ?: "",
                                     amount.toString(),
                                     "Income",
                                     document.getString("date") ?: ""
                                 )
-                                transactionActivity2ArrayList.add(transaction)
+                                modelsActivityArrayList.add(transaction)
                             }
                             binding.sumIncome.text = sumIncome.toString()
                             binding.balance.text = (sumIncome - sumExpense).toString()
 
-                            transactionActivity3.notifyDataSetChanged()
+                            adapterActivity.notifyDataSetChanged()
                         }
                     }
             }

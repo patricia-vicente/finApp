@@ -1,6 +1,6 @@
 package com.example.finapp
 
-class TransactionActivity2 {
+class ModelsActivity {
     var id: String? = null
     var note: String? = null
     var amount: String? = null
