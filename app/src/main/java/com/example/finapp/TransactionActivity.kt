@@ -1,5 +1,6 @@
 package com.example.finapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,20 @@ class TransactionActivity : AppCompatActivity() {
         firebaseStore=FirebaseFirestore.getInstance()
         firebaseAuth=FirebaseAuth.getInstance()
         firebaseUser=firebaseAuth.currentUser
+
+        binding.bottomNavBar.setOnNavigationItemSelectedListener { item ->
+            val intent = when (item.itemId) {
+                R.id.transaction -> Intent(this, TransactionActivity::class.java)
+                R.id.income -> Intent(this, IncomeActivity::class.java)
+                R.id.expense -> Intent(this, ExpenseActivity::class.java)
+                R.id.dashboard -> Intent(this, DashboardActivity::class.java)
+                else -> null
+            }
+            intent?.let {
+                startActivity(it)
+                true
+            } ?: false
+        }
 
         binding.incomeBtn.setOnClickListener {
             transactionOp="Income"

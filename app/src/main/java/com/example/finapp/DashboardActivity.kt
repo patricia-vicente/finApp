@@ -23,7 +23,7 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firebaseStore = FirebaseFirestore.getInstance()
-        firebaseAuth = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()//
         adapterActivity = AdapterActivity(this, modelsActivityArrayList)
 
         binding.recyclerDash.layoutManager = LinearLayoutManager(this)

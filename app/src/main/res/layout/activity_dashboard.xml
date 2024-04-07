@@ -6,11 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:id="@+id/tool_bar_dashboard"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/nav_header">
+        android:background="@drawable/bg_fundo">
         <ImageView
             android:id="@+id/btn_refresh"
             android:layout_width="wrap_content"
@@ -26,7 +27,7 @@
             android:layout_centerInParent="true"
             android:text="Main Dashboard"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -59,6 +60,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Income"
+                    android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="20sp"/>
 
@@ -133,6 +135,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/menu_bottom"
-        android:background="@drawable/background_color"/>
+        android:background="@drawable/bg_fundo"/>
 
 </RelativeLayout>
