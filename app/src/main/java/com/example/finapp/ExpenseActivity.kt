@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finapp.databinding.ActivityExpenseBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Date
 
 class ExpenseActivity : AppCompatActivity() {
     private lateinit var binding: ActivityExpenseBinding
@@ -15,7 +16,6 @@ class ExpenseActivity : AppCompatActivity() {
     private var modelsActivityArrayList = ArrayList<ModelsActivity>()
     private lateinit var adapterActivity: AdapterActivity
     private var sumExpense: Int = 0
-    private var sumIncome: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +27,7 @@ class ExpenseActivity : AppCompatActivity() {
         adapterActivity = AdapterActivity(this, modelsActivityArrayList)
 
         binding.recyclerDashExpense.layoutManager = LinearLayoutManager(this)
-        binding.recyclerDashExpense.adapter =
-            AdapterActivity(this, modelsActivityArrayList)
+        binding.recyclerDashExpense.adapter = AdapterActivity(this, modelsActivityArrayList)
         binding.recyclerDashExpense.setHasFixedSize(true)
 
         binding.bottomNavBar.setOnNavigationItemSelectedListener { item ->
@@ -62,25 +61,36 @@ class ExpenseActivity : AppCompatActivity() {
         val userId = firebaseAuth.uid ?: return
 
         modelsActivityArrayList.clear()
+        sumExpense = 0
+
 
         firebaseStore.collection("Expenses").document(userId).collection("Notes")
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    task.result?.documents?.forEach { document ->
-                        val amount = document.getString("amount")?.toIntOrNull() ?: 0
-
-                        val transaction = ModelsActivity(
+                    val sortedList = task.result?.documents?.mapNotNull { document ->
+                        val amount = document.getString("amount")?.toIntOrNull() ?: return@mapNotNull null
+                        sumExpense += amount
+                        ModelsActivity(
                             document.id,
                             document.getString("note") ?: "",
                             amount.toString(),
                             "Expense",
-                            document.getString("date") ?: ""
+                            document.getString("date") ?: return@mapNotNull null
                         )
-                        modelsActivityArrayList.add(transaction)
+                    }?.sortedByDescending {
+                        it.date?.toDate() ?: Date(0)
+                    } ?: listOf()
+
+                    modelsActivityArrayList.addAll(sortedList)
+                    runOnUiThread {
+                        binding.sumExpenseExpense.text = sumExpense.toString()
+                        binding.recyclerDashExpense.adapter =
+                            AdapterActivity(this@ExpenseActivity, modelsActivityArrayList)
                     }
-                    adapterActivity.notifyDataSetChanged()
                 }
             }
+
     }
 
 }
+

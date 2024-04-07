@@ -82,37 +82,50 @@ class DashboardActivity : AppCompatActivity() {
                         modelsActivityArrayList.add(transaction)
                     }
 
-                    binding.sumExpense.text = sumExpense.toString()
-                    binding.balance.text = (sumIncome - sumExpense).toString()
-                    adapterActivity.notifyDataSetChanged()
-                }
-
-
-                firebaseStore.collection("Incomes").document(userId).collection("Notes")
-                    .get().addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            task.result?.documents?.forEach { document ->
-                                val amount = document.getString("amount")?.toIntOrNull() ?: 0
-                                sumIncome += amount
-
-                                val transaction = ModelsActivity(
-                                    document.id,
-                                    document.getString("note") ?: "",
-                                    amount.toString(),
-                                    "Income",
-                                    document.getString("date") ?: ""
-                                )
-                                modelsActivityArrayList.add(transaction)
-                            }
-                            binding.sumIncome.text = sumIncome.toString()
-                            binding.balance.text = (sumIncome - sumExpense).toString()
-
-                            adapterActivity.notifyDataSetChanged()
-                        }
+                    runOnUiThread {
+                        binding.sumExpense.text = sumExpense.toString()
+                        binding.balance.text = (sumIncome - sumExpense).toString()
+                        val adapterActivity =
+                            AdapterActivity(this@DashboardActivity, modelsActivityArrayList)
+                        binding.recyclerDash.adapter = adapterActivity
                     }
+                } else {
+
+
+                }
+            }
+
+
+
+        firebaseStore.collection("Incomes").document(userId).collection("Notes")
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    task.result?.documents?.forEach { document ->
+                        val amount = document.getString("amount")?.toIntOrNull() ?: 0
+                        sumIncome += amount
+
+                        val transaction = ModelsActivity(
+                            document.id,
+                            document.getString("note") ?: "",
+                            amount.toString(),
+                            "Income",
+                            document.getString("date") ?: ""
+                        )
+                        modelsActivityArrayList.add(transaction)
+                    }
+                    runOnUiThread {
+                        binding.sumIncome.text = sumIncome.toString()
+                        binding.balance.text = (sumIncome - sumExpense).toString()
+                        val adapterActivity =
+                            AdapterActivity(this@DashboardActivity, modelsActivityArrayList)
+                        binding.recyclerDash.adapter = adapterActivity
+                    }
+                } else {
+
+                }
             }
     }
-}
 
+}
 
 

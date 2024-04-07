@@ -58,25 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Income"
-                    android:textStyle="bold"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
                     android:text="Expense"
-                    android:textStyle="bold"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Balance"
                     android:textStyle="bold"
                     android:textSize="20sp"/>
             </LinearLayout>
@@ -92,26 +74,9 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="000"
-                    android:id="@+id/sumIncome_expense"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="000"
                     android:id="@+id/sumExpense_expense"
                     android:textSize="20sp"/>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="000"
-                    android:id="@+id/balance_expense"
-                    android:textSize="20sp"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

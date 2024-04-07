@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finapp.databinding.ActivityIncomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 
 class IncomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIncomeBinding
@@ -14,7 +18,6 @@ class IncomeActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private var modelsActivityArrayList = ArrayList<ModelsActivity>()
     private lateinit var adapterActivity: AdapterActivity
-    private var sumExpense: Int = 0
     private var sumIncome: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,26 +64,43 @@ class IncomeActivity : AppCompatActivity() {
     private fun loadData() {
         val userId = firebaseAuth.uid ?: return
 
-        modelsActivityArrayList.clear() // Limpa a lista para garantir que está vazia antes de carregar novos dados.
+        modelsActivityArrayList.clear()
+        sumIncome = 0
 
         firebaseStore.collection("Incomes").document(userId).collection("Notes")
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    task.result?.documents?.forEach { document ->
-                        val amount = document.getString("amount")?.toIntOrNull() ?: 0
-
-                        val transaction = ModelsActivity(
+                    val sortedList = task.result?.documents?.mapNotNull { document ->
+                        val amount = document.getString("amount")?.toIntOrNull() ?: return@mapNotNull null
+                        sumIncome += amount
+                        ModelsActivity(
                             document.id,
                             document.getString("note") ?: "",
                             amount.toString(),
                             "Income",
-                            document.getString("date") ?: ""
+                            document.getString("date") ?: return@mapNotNull null
                         )
-                        modelsActivityArrayList.add(transaction)
+                    }?.sortedByDescending {
+                        it.date?.toDate() ?: Date(0)
+                    } ?: listOf()
+
+                    modelsActivityArrayList.addAll(sortedList)
+                    runOnUiThread {
+                        binding.sumIncomeIncome.text = sumIncome.toString()
+                        binding.recyclerDashIncome.adapter =
+                            AdapterActivity(this@IncomeActivity, modelsActivityArrayList)
                     }
-                    adapterActivity.notifyDataSetChanged() // Notifica o adapter de que os dados foram atualizados.
                 }
             }
+
     }
 
+}
+
+fun String.toDate(): Date? {
+    return try {
+        SimpleDateFormat("dd MM yyyy_HH:mm", Locale.getDefault()).parse(this)
+    } catch (e: Exception) {
+        null
+    }
 }
