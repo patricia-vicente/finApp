@@ -1,4 +1,4 @@
-package com.example.finapp
+/*package com.example.finapp
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -112,7 +112,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
 }
-
+*/
 
 
 

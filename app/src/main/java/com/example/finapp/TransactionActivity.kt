@@ -27,19 +27,38 @@ class TransactionActivity : AppCompatActivity() {
         firebaseAuth=FirebaseAuth.getInstance()
         firebaseUser=firebaseAuth.currentUser
 
-        binding.bottomNavBar.setOnNavigationItemSelectedListener { item ->
-            val intent = when (item.itemId) {
-                R.id.transaction -> Intent(this, TransactionActivity::class.java)
-                R.id.income -> Intent(this, IncomeActivity::class.java)
-                R.id.expense -> Intent(this, ExpenseActivity::class.java)
-                R.id.dashboard -> Intent(this, DashboardActivity::class.java)
-                else -> null
+
+        binding.incBtnNav.setOnClickListener {
+            try {
+                val intent = Intent(this@TransactionActivity, IncomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
             }
-            intent?.let {
-                startActivity(it)
-                true
-            } ?: false
         }
+
+        binding.expBtnNav.setOnClickListener {
+            try {
+                val intent = Intent(this@TransactionActivity, ExpenseActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.transactionBar.setOnClickListener {
+            try {
+                val intent = Intent(this@TransactionActivity, TransactionActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+
 
         binding.incomeBtn.setOnClickListener {
             transactionOp="Income"

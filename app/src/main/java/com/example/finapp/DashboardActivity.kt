@@ -60,6 +60,47 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
+        binding.viewDashMain.setOnClickListener {
+            try {
+                val intent = Intent(this@DashboardActivity, DashboardActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.viewIncMain.setOnClickListener {
+            try {
+                val intent = Intent(this@DashboardActivity, IncomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.viewExpMain.setOnClickListener {
+            try {
+                val intent = Intent(this@DashboardActivity, ExpenseActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.viewTransMain.setOnClickListener {
+            try {
+                val intent = Intent(this@DashboardActivity, TransactionActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+
 
 
 

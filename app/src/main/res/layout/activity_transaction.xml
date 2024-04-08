@@ -1,198 +1,385 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recycler_dash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#F8C6D7"
+    tools:context=".MainActivity2">
 
-    <RelativeLayout
-        android:id="@+id/tool_bar_transactions"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/background_color">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Transactions"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tool_bar_transactions"
-        android:id="@+id/transactionAdd"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="10dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="8dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="7dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center"
+                    android:text="Hi, here is your:"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Amount:"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_margin="10dp"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/amount_edit"/>
-
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/totalIncome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Transaction"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="1">
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/linearLayoutTransaction"
+                    android:layout_width="406dp"
+                    android:layout_height="539dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/w_background"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Type:"/>
 
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_margin="10dp"
-                    android:layout_height="wrap_content">
-
-                    <EditText
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/type_edit"/>
+                        android:layout_below="@+id/linearLayoutTransaction"
+                        android:id="@+id/transactionAdd"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="50dp"
+                        app:cardElevation="4dp"
+                        app:cardCornerRadius="8dp">
 
-                </RelativeLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="7dp">
 
-            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_margin="10dp"
+                                    android:gravity="center"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Amount:"/>
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="2"
+                                    android:layout_margin="10dp"
+                                    android:layout_height="wrap_content">
+
+                                    <EditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/amount_edit"/>
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_margin="10dp"
+                                    android:gravity="center"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Type:"/>
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="2"
+                                    android:layout_margin="10dp"
+                                    android:layout_height="wrap_content">
+
+                                    <EditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/type_edit"/>
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_margin="10dp"
+                                    android:gravity="center"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Note:"/>
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="2"
+                                    android:layout_margin="10dp"
+                                    android:layout_height="wrap_content">
+
+                                    <EditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/note_edit"/>
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="2"
+                                    android:layout_margin="10dp"
+                                    android:layout_height="wrap_content">
+
+                                    <Button
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Income"
+                                        android:id="@+id/income_btn"
+                                        android:backgroundTint="#F8C6D7"
+                                        android:textAppearance="?android:textAppearanceMedium"/>
+
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="2"
+                                    android:layout_margin="10dp"
+                                    android:layout_height="wrap_content">
+
+                                    <Button
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Expense"
+                                        android:id="@+id/expense_btn"
+                                        android:backgroundTint="#F8C6D7"
+                                        android:textAppearance="?android:textAppearanceMedium"/>
+
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+
+
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:id="@+id/app_bar2"
+            app:fabCradleMargin="8dp"
+            android:backgroundTint="#FBE3E3"
+            app:fabCradleVerticalOffset="6dp"
+            app:fabCradleRoundedCornerRadius="50dp"
+            android:layout_height="60dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.25"
+                    android:id="@+id/incBtnNav"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/income" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Note:"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_margin="10dp"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/note_edit"/>
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_margin="10dp"
-                    android:layout_height="wrap_content">
-
-                    <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Income"
-                        android:id="@+id/income_btn"
-                        android:background="@drawable/bg_button"
-                        android:textAppearance="?android:textAppearanceMedium"/>
+                        android:textAlignment="center" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.25"
+                    android:id="@+id/expBtnNav"
+                    android:orientation="vertical">
 
-                </RelativeLayout>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/expense" />
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_margin="10dp"
-                    android:layout_height="wrap_content">
-
-                    <Button
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Expense"
-                        android:id="@+id/expense_btn"
-                        android:background="@drawable/bg_button"
-                        android:textAppearance="?android:textAppearanceMedium"/>
+                        android:textAlignment="center" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.25"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
-                </RelativeLayout>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/income" />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Income"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.25"
+                    android:id="@+id/btnProfNav"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/bottom_btn2" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Profile"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.25"
+                    android:id="@+id/btnSetNav"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/bottom_btn4" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Settings"
+                        android:textAlignment="center" />
+                </LinearLayout>
             </LinearLayout>
 
-        </LinearLayout>
+        </com.google.android.material.bottomappbar.BottomAppBar>
 
-    </androidx.cardview.widget.CardView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/transaction_bar"
+            android:layout_width="wrap_content"
+            android:src="@drawable/add_transaction"
+            android:backgroundTint="#F8C6D7"
+            app:maxImageSize="30dp"
+            app:layout_anchor="@id/app_bar2"
+            android:layout_height="wrap_content" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/menu_bottom"
-        android:background="@drawable/background_color"/>
 
-</RelativeLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

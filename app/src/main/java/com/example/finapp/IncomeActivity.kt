@@ -19,6 +19,7 @@ class IncomeActivity : AppCompatActivity() {
     private var modelsActivityArrayList = ArrayList<ModelsActivity>()
     private lateinit var adapterActivity: AdapterActivity
     private var sumIncome: Int = 0
+    private var sumExpense:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,20 +35,7 @@ class IncomeActivity : AppCompatActivity() {
             AdapterActivity(this, modelsActivityArrayList)
         binding.recyclerDashIncome.setHasFixedSize(true)
 
-        binding.bottomNavBar.setOnNavigationItemSelectedListener { item ->
-            val intent = when (item.itemId) {
-                R.id.transaction -> Intent(this, TransactionActivity::class.java)
-                R.id.income -> Intent(this, IncomeActivity::class.java)
-                R.id.expense -> Intent(this, ExpenseActivity::class.java)
-                R.id.dashboard -> Intent(this, DashboardActivity::class.java)
-                else -> null
-            }
-            intent?.let {
-                startActivity(it)
-                true
-            } ?: false
-        }
-        binding.btnRefreshIncome.setOnClickListener {
+        binding.incBtnNav.setOnClickListener {
             try {
                 val intent = Intent(this@IncomeActivity, IncomeActivity::class.java)
                 startActivity(intent)
@@ -56,6 +44,67 @@ class IncomeActivity : AppCompatActivity() {
 
             }
         }
+
+        binding.expBtnNav.setOnClickListener {
+            try {
+                val intent = Intent(this@IncomeActivity, ExpenseActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.transactionBar.setOnClickListener {
+            try {
+                val intent = Intent(this@IncomeActivity, TransactionActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.DashMain.setOnClickListener {
+            try {
+                val intent = Intent(this@IncomeActivity, DashboardActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.incExp.setOnClickListener {
+            try {
+                val intent = Intent(this@IncomeActivity, IncomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.expExp.setOnClickListener {
+            try {
+                val intent = Intent(this@IncomeActivity, ExpenseActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.transExp.setOnClickListener {
+            try {
+                val intent = Intent(this@IncomeActivity, TransactionActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
 
 
         loadData()
@@ -73,6 +122,7 @@ class IncomeActivity : AppCompatActivity() {
                     val sortedList = task.result?.documents?.mapNotNull { document ->
                         val amount = document.getString("amount")?.toIntOrNull() ?: return@mapNotNull null
                         sumIncome += amount
+
                         ModelsActivity(
                             document.id,
                             document.getString("note") ?: "",

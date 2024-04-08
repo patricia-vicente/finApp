@@ -30,20 +30,18 @@ class ExpenseActivity : AppCompatActivity() {
         binding.recyclerDashExpense.adapter = AdapterActivity(this, modelsActivityArrayList)
         binding.recyclerDashExpense.setHasFixedSize(true)
 
-        binding.bottomNavBar.setOnNavigationItemSelectedListener { item ->
-            val intent = when (item.itemId) {
-                R.id.transaction -> Intent(this, TransactionActivity::class.java)
-                R.id.income -> Intent(this, IncomeActivity::class.java)
-                R.id.expense -> Intent(this, ExpenseActivity::class.java)
-                R.id.dashboard -> Intent(this, DashboardActivity::class.java)
-                else -> null
+
+        binding.incBtnNav.setOnClickListener {
+            try {
+                val intent = Intent(this@ExpenseActivity, IncomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
             }
-            intent?.let {
-                startActivity(it)
-                true
-            } ?: false
         }
-        binding.btnRefreshExpense.setOnClickListener {
+
+        binding.expBtnNav.setOnClickListener {
             try {
                 val intent = Intent(this@ExpenseActivity, ExpenseActivity::class.java)
                 startActivity(intent)
@@ -52,6 +50,57 @@ class ExpenseActivity : AppCompatActivity() {
 
             }
         }
+
+        binding.transactionBar.setOnClickListener {
+            try {
+                val intent = Intent(this@ExpenseActivity, TransactionActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.viewIncDashMain.setOnClickListener {
+            try {
+                val intent = Intent(this@ExpenseActivity, DashboardActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.incExp.setOnClickListener {
+            try {
+                val intent = Intent(this@ExpenseActivity, IncomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.expExp.setOnClickListener {
+            try {
+                val intent = Intent(this@ExpenseActivity, ExpenseActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.transExp.setOnClickListener {
+            try {
+                val intent = Intent(this@ExpenseActivity, TransactionActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
 
 
         loadData()
