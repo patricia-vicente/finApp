@@ -16,6 +16,15 @@
         android:theme="@style/Theme.FinApp"
         tools:targetApi="31">
         <activity
+            android:name=".IncomeActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".ExpenseActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".UpdateActivity"
             android:exported="false" />
         <activity

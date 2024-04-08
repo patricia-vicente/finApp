@@ -2,14 +2,9 @@ package com.example.finapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finapp.databinding.ActivityDashboardBinding
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -19,8 +14,6 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private var modelsActivityArrayList = ArrayList<ModelsActivity>()
     private lateinit var adapterActivity: AdapterActivity
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navigationView: NavigationView
     private var sumExpense: Int = 0
     private var sumIncome: Int = 0
 
@@ -29,67 +22,47 @@ class DashboardActivity : AppCompatActivity() {
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navigationView = findViewById(R.id.naView)
-        drawerLayout = findViewById(R.id.drawer_layout)
-
         firebaseStore = FirebaseFirestore.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()//
         adapterActivity = AdapterActivity(this, modelsActivityArrayList)
 
-        binding.recyclerDash.layoutManager = LinearLayoutManager(this)
-        binding.recyclerDash.adapter = AdapterActivity(this, modelsActivityArrayList)
-        binding.recyclerDash.setHasFixedSize(true)
+        binding.recyclerDash2.layoutManager = LinearLayoutManager(this)
+        binding.recyclerDash2.adapter = AdapterActivity(this, modelsActivityArrayList)
+        binding.recyclerDash2.setHasFixedSize(true)
 
-        binding.btnDash.setOnClickListener {
-            binding.drwer.openDrawer(GravityCompat.START)
-        }
-
-        binding.naView.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                // IDs dos itens do menu
-                R.id.dashboard -> {
-                    Toast.makeText(this, "Dashboard Clicked", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.income -> {
-                    Toast.makeText(this, "Income Clicked", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.expense -> {
-                    Toast.makeText(this, "Expense Clicked", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                else -> false
-            }.also {
-                binding.drawerLayout.closeDrawer(GravityCompat.START)
-            }
-        }
-
-
-
-        binding.bottomNavBar.setOnNavigationItemSelectedListener { item ->
-            val intent = when (item.itemId) {
-                R.id.transaction -> Intent(this, TransactionActivity::class.java)
-                R.id.income -> Intent(this, IncomeActivity::class.java)
-                R.id.expense -> Intent(this, ExpenseActivity::class.java)
-                R.id.dashboard -> Intent(this, DashboardActivity::class.java)
-                else -> null
-            }
-            intent?.let {
-                startActivity(it)
-                true
-            } ?: false
-        }
-        binding.btnRefresh.setOnClickListener {
+        binding.incBtnNav.setOnClickListener {
             try {
-                val intent = Intent(this@DashboardActivity, DashboardActivity::class.java)
+                val intent = Intent(this@DashboardActivity, IncomeActivity::class.java)
                 startActivity(intent)
                 finish()
             } catch (e: Exception) {
 
             }
         }
+
+        binding.expBtnNav.setOnClickListener {
+            try {
+                val intent = Intent(this@DashboardActivity, ExpenseActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+        binding.transactionBar.setOnClickListener {
+            try {
+                val intent = Intent(this@DashboardActivity, TransactionActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+
+            }
+        }
+
+
+
+
 
 
         loadData()
@@ -122,10 +95,10 @@ class DashboardActivity : AppCompatActivity() {
 
                     runOnUiThread {
                         binding.sumExpense.text = sumExpense.toString()
-                        binding.balance.text = (sumIncome - sumExpense).toString()
+                        binding.sumBalance.text = (sumIncome - sumExpense).toString()
                         val adapterActivity =
                             AdapterActivity(this@DashboardActivity, modelsActivityArrayList)
-                        binding.recyclerDash.adapter = adapterActivity
+                        binding.recyclerDash2.adapter = adapterActivity
                     }
                 } else {
 
@@ -153,10 +126,10 @@ class DashboardActivity : AppCompatActivity() {
                     }
                     runOnUiThread {
                         binding.sumIncome.text = sumIncome.toString()
-                        binding.balance.text = (sumIncome - sumExpense).toString()
+                        binding.sumBalance.text = (sumIncome - sumExpense).toString()
                         val adapterActivity =
                             AdapterActivity(this@DashboardActivity, modelsActivityArrayList)
-                        binding.recyclerDash.adapter = adapterActivity
+                        binding.recyclerDash2.adapter = adapterActivity
                     }
                 } else {
 

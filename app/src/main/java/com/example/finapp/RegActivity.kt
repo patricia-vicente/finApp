@@ -19,7 +19,7 @@ class RegActivity : AppCompatActivity() {
 
         eAuth = FirebaseAuth.getInstance()
 
-        binding.signIn.setOnClickListener {
+        binding.loginBtn.setOnClickListener {
             val intent= Intent(this@RegActivity,MainActivity::class.java)
             try{
                 startActivity(intent);
@@ -28,7 +28,7 @@ class RegActivity : AppCompatActivity() {
             }
         }
 
-        binding.regBtn.setOnClickListener {
+        binding.registerNow.setOnClickListener {
             val email = binding.regEmail.text.toString()
             val password = binding.regPassword.text.toString()
             if (email.trim().isEmpty() || password.trim().isEmpty()) {

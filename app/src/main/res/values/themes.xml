@@ -3,7 +3,6 @@
     <style name="Base.Theme.FinApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Theme.FinApp" parent="Base.Theme.FinApp" />

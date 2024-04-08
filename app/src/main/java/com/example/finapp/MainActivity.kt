@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        binding.registerHere.setOnClickListener {
+        binding.signUp.setOnClickListener {
             val intent = Intent(this@MainActivity, RegActivity::class.java)
             try {
                 startActivity(intent)
