@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             try {
                 startActivity(intent)
             } catch (e: Exception) {
-                // Handle exception
+
             }
         }
 
