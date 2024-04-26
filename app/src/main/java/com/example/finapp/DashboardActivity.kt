@@ -134,21 +134,17 @@ class DashboardActivity : AppCompatActivity() {
             }
         Thread {
             try {
-                latch.await() // Espera que todas as consultas de dados estejam completas
-                // Ordena todas as transações pela data, se necessário novamente
+                latch.await()
                 allTransactions.sortByDescending { it.date }
                 runOnUiThread {
-                    // Atualiza a interface do usuário com os novos dados
                     binding.sumExpense.text = sumExpense.toString()
                     binding.sumIncome.text = sumIncome.toString()
                     binding.sumBalance.text = (sumIncome - sumExpense).toString()
 
-                    // Atualiza o adapter com as transações e notifica a mudança de dados
                     adapterActivity.modelsActivityArrayList = allTransactions as ArrayList<ModelsActivity>
                     adapterActivity.notifyDataSetChanged()
                 }
             } catch (e: InterruptedException) {
-                // Log do erro para depuração
                 Log.e("DashboardActivity", "Thread interrupted", e)
             }
         }.start()
