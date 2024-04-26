@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class AdapterActivity(
     private val context: Context,
-    private val modelsActivityArrayList: ArrayList<ModelsActivity>
+    var modelsActivityArrayList: ArrayList<ModelsActivity>
 ) : RecyclerView.Adapter<AdapterActivity.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

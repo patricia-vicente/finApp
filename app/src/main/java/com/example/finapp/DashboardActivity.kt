@@ -2,11 +2,15 @@ package com.example.finapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finapp.databinding.ActivityDashboardBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import java.util.concurrent.CountDownLatch
+
 
 class DashboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardBinding
@@ -23,101 +27,76 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firebaseStore = FirebaseFirestore.getInstance()
-        firebaseAuth = FirebaseAuth.getInstance()//
+        firebaseAuth = FirebaseAuth.getInstance()
         adapterActivity = AdapterActivity(this, modelsActivityArrayList)
 
         binding.recyclerDash2.layoutManager = LinearLayoutManager(this)
-        binding.recyclerDash2.adapter = AdapterActivity(this, modelsActivityArrayList)
+        binding.recyclerDash2.adapter = adapterActivity
         binding.recyclerDash2.setHasFixedSize(true)
 
-        binding.incBtnNav.setOnClickListener {
-            try {
-                val intent = Intent(this@DashboardActivity, IncomeActivity::class.java)
-                startActivity(intent)
-                finish()
-            } catch (e: Exception) {
+        setNavigationListeners()
+        loadData()
+    }
 
-            }
+    private fun setNavigationListeners() {
+        binding.incBtnNav.setOnClickListener {
+            navigateTo(IncomeActivity::class.java)
         }
 
         binding.expBtnNav.setOnClickListener {
-            try {
-                val intent = Intent(this@DashboardActivity, ExpenseActivity::class.java)
-                startActivity(intent)
-                finish()
-            } catch (e: Exception) {
-
-            }
+            navigateTo(ExpenseActivity::class.java)
         }
 
         binding.transactionBar.setOnClickListener {
-            try {
-                val intent = Intent(this@DashboardActivity, TransactionActivity::class.java)
-                startActivity(intent)
-                finish()
-            } catch (e: Exception) {
-
-            }
+            navigateTo(TransactionActivity::class.java)
         }
 
         binding.viewDashMain.setOnClickListener {
-            try {
-                val intent = Intent(this@DashboardActivity, DashboardActivity::class.java)
-                startActivity(intent)
-                finish()
-            } catch (e: Exception) {
-
-            }
+            navigateTo(DashboardActivity::class.java)
         }
 
         binding.viewIncMain.setOnClickListener {
-            try {
-                val intent = Intent(this@DashboardActivity, IncomeActivity::class.java)
-                startActivity(intent)
-                finish()
-            } catch (e: Exception) {
-
-            }
+            navigateTo(IncomeActivity::class.java)
         }
 
         binding.viewExpMain.setOnClickListener {
-            try {
-                val intent = Intent(this@DashboardActivity, ExpenseActivity::class.java)
-                startActivity(intent)
-                finish()
-            } catch (e: Exception) {
-
-            }
+            navigateTo(ExpenseActivity::class.java)
         }
 
         binding.viewTransMain.setOnClickListener {
-            try {
-                val intent = Intent(this@DashboardActivity, TransactionActivity::class.java)
-                startActivity(intent)
-                finish()
-            } catch (e: Exception) {
-
-            }
+            navigateTo(TransactionActivity::class.java)
         }
+    }
 
-        loadData()
+    private fun navigateTo(activityClass: Class<*>) {
+        val intent = Intent(this, activityClass)
+        startActivity(intent)
     }
 
     private fun loadData() {
         val userId = firebaseAuth.uid ?: return
 
         modelsActivityArrayList.clear()
-
         sumExpense = 0
         sumIncome = 0
 
+        val latch = CountDownLatch(2)
+        val allTransactions = mutableListOf<ModelsActivity>()
+
+        loadExpenses(userId, latch, allTransactions)
+        loadIncomes(userId, latch, allTransactions)
+
+    }
+
+    private fun loadExpenses(userId: String, latch: CountDownLatch, allTransactions: MutableList<ModelsActivity>) {
         firebaseStore.collection("Expenses").document(userId).collection("Notes")
-            .get().addOnCompleteListener { task ->
+            .orderBy("date", Query.Direction.DESCENDING)
+            .get()
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     task.result?.documents?.forEach { document ->
                         val amount = document.getString("amount")?.toIntOrNull() ?: 0
                         sumExpense += amount
-
                         val transaction = ModelsActivity(
                             document.id,
                             document.getString("note") ?: "",
@@ -125,31 +104,22 @@ class DashboardActivity : AppCompatActivity() {
                             "Expense",
                             document.getString("date") ?: ""
                         )
-                        modelsActivityArrayList.add(transaction)
+                        allTransactions.add(transaction)
                     }
-
-                    runOnUiThread {
-                        binding.sumExpense.text = sumExpense.toString()
-                        binding.sumBalance.text = (sumIncome - sumExpense).toString()
-                        val adapterActivity =
-                            AdapterActivity(this@DashboardActivity, modelsActivityArrayList)
-                        binding.recyclerDash2.adapter = adapterActivity
-                    }
-                } else {
-
-
                 }
+                latch.countDown()
             }
+    }
 
-
-
+    private fun loadIncomes(userId: String, latch: CountDownLatch, allTransactions: MutableList<ModelsActivity>) {
         firebaseStore.collection("Incomes").document(userId).collection("Notes")
-            .get().addOnCompleteListener { task ->
+            .orderBy("date", Query.Direction.DESCENDING)
+            .get()
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     task.result?.documents?.forEach { document ->
                         val amount = document.getString("amount")?.toIntOrNull() ?: 0
                         sumIncome += amount
-
                         val transaction = ModelsActivity(
                             document.id,
                             document.getString("note") ?: "",
@@ -157,21 +127,32 @@ class DashboardActivity : AppCompatActivity() {
                             "Income",
                             document.getString("date") ?: ""
                         )
-                        modelsActivityArrayList.add(transaction)
+                        allTransactions.add(transaction)
                     }
-                    runOnUiThread {
-                        binding.sumIncome.text = sumIncome.toString()
-                        binding.sumBalance.text = (sumIncome - sumExpense).toString()
-                        val adapterActivity =
-                            AdapterActivity(this@DashboardActivity, modelsActivityArrayList)
-                        binding.recyclerDash2.adapter = adapterActivity
-                    }
-                } else {
-
                 }
+                latch.countDown()
             }
+        Thread {
+            try {
+                latch.await() // Espera que todas as consultas de dados estejam completas
+                // Ordena todas as transações pela data, se necessário novamente
+                allTransactions.sortByDescending { it.date }
+                runOnUiThread {
+                    // Atualiza a interface do usuário com os novos dados
+                    binding.sumExpense.text = sumExpense.toString()
+                    binding.sumIncome.text = sumIncome.toString()
+                    binding.sumBalance.text = (sumIncome - sumExpense).toString()
+
+                    // Atualiza o adapter com as transações e notifica a mudança de dados
+                    adapterActivity.modelsActivityArrayList = allTransactions as ArrayList<ModelsActivity>
+                    adapterActivity.notifyDataSetChanged()
+                }
+            } catch (e: InterruptedException) {
+                // Log do erro para depuração
+                Log.e("DashboardActivity", "Thread interrupted", e)
+            }
+        }.start()
     }
 
+
 }
-
-
