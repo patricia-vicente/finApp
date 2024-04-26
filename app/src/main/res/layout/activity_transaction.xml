@@ -5,8 +5,7 @@
     android:id="@+id/recycler_dash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8C6D7"
-    tools:context=".MainActivity2">
+    android:background="#F8C6D7">
 
     <ScrollView
         android:layout_width="match_parent"

@@ -19,7 +19,6 @@ class IncomeActivity : AppCompatActivity() {
     private var modelsActivityArrayList = ArrayList<ModelsActivity>()
     private lateinit var adapterActivity: AdapterActivity
     private var sumIncome: Int = 0
-    private var sumExpense:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

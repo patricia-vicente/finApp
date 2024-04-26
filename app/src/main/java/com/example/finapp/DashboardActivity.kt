@@ -100,12 +100,6 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
-
-
-
-
-
-
         loadData()
     }
 
